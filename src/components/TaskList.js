@@ -2,26 +2,21 @@ import React from "react";
 import Task from "./Task";
 
 
-function TaskList({ todos, setTodos, selectedCategory }) {
+function TaskList({ tasks, OnDeleteTask }) {
 
-  function deleteTask(text) {
-    const updatedTodos = todos.filter(todo => todo.text !== text)
-    setTodos(updatedTodos)
-
-  }
-
-  const todosToDisplay = todos.filter((todo => {
-    if (selectedCategory === "All") return true;
-
-    return todo.category === selectedCategory;
-  }))
+  const taskList = tasks.map((task) => (
+    <Task 
+      OnDeleteTask={OnDeleteTask} 
+      key={task.text} 
+      text={task.text} 
+      category={task.category} 
+    />
+  ))
 
   return (
     <div className="tasks">
       {/* display a list of tasks using Task component */}
-      {todosToDisplay.map((todo, index) => (
-        <Task deleteTask={deleteTask} key={todo.text} text={todo.text} category={todo.category} />
-      ))}
+      {taskList}
     </div>
   );
 }

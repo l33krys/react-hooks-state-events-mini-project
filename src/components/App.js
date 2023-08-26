@@ -17,22 +17,29 @@ function App() {
     setSelectedCategory(e.target.textContent)
   }
 
-  function onTaskFormSubmit(e) {
-    e.preventDefault()
-    const newTask = {
-      text: e.target.text.value,
-      category: e.target.category.value
-    }
+  function onTaskFormSubmit(newTask) {
     const updatedTodos = [...todos, newTask];
     setTodos(updatedTodos);
   }
 
+  function OnDeleteTask(text) {
+    const updatedTodos = todos.filter(todo => todo.text !== text)
+    setTodos(updatedTodos)
+
+  }
+
+  const todosToDisplay = todos.filter((todo => {
+    if (selectedCategory === "All") return true;
+
+    return todo.category === selectedCategory;
+  }))
+
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter handleSelection={handleSelection} categories={categories} setCategories={setCategories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+      <CategoryFilter handleSelection={handleSelection} categories={categories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
       <NewTaskForm categories={categories} onTaskFormSubmit={onTaskFormSubmit}/>
-      <TaskList todos={todos} setTodos={setTodos} selectedCategory={selectedCategory} />
+      <TaskList tasks={todosToDisplay} OnDeleteTask={OnDeleteTask} />
     </div>
   );
 }

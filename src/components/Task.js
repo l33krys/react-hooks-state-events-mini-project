@@ -1,9 +1,9 @@
 import React from "react";
 
-function Task( { deleteTask, text, category }) {
+function Task( { OnDeleteTask, text, category }) {
 
   function handleRemove() {
-    deleteTask(text)
+    OnDeleteTask(text)
   }
 
   return (
